@@ -47,6 +47,16 @@
                     color: darkgrey;
                 }
             }
+            &_delete-btn {
+                display: inline-block;
+                border: 0.5px solid darkred;
+                padding: 1rem;
+                cursor: pointer;
+                background-color: red;
+                color: whitesmoke;
+                transform: translateY(-10px);
+                border-radius: 25%;
+            }
         }
         &_submit-btn {
             padding: 0.5rem 1rem;

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { State, Todo } from './redux/types/types';
-import { createTodoAction, toggleTodoAction } from './redux/actions/actions';
+import { createTodoAction, deleteTodoAction, toggleTodoAction } from './redux/actions/actions';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +21,9 @@ function App() {
 
   const handleTodoClick = (id: string): any => {
     dispatch(toggleTodoAction({ id }))
+  }
+  const handleDeleteTodoClick = (id: string): any => {
+    dispatch(deleteTodoAction({ id }))
   }
 
   const handleAddTodo = (e: FormEvent<HTMLFormElement>): void => {
@@ -51,12 +54,18 @@ function App() {
 
         <ul className="list_todo">
           {todos.map((todo: Todo) =>
-            <li key={todo.id} onClick={() => { handleTodoClick(todo.id) }} className={!todo.isCompleted ? "list_todo_item" : "list_todo_item list_todo_item_completed"}>{todo.content}</li>)}
+            <li key={todo.id} >
+              <span className={!todo.isCompleted ? "list_todo_item" : "list_todo_item list_todo_item_completed"}
+                onClick={() => { handleTodoClick(todo.id) }}>
+                {todo.content}
+              </span>
+              <span className="list_todo_delete-btn"
+                onClick={() => { handleDeleteTodoClick(todo.id) }}>X</span>
+            </li>)}
         </ul>
         <button type="submit" className="form_submit-btn">Add Todo</button>
       </form>
     </div>
   );
 }
-
 export default App;
