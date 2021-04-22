@@ -1,24 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { MouseEvent, ChangeEvent, FormEvent, useState } from 'react';
+import './App.scss'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { State, Todo } from './redux/types/types';
+import { createTodoAction, toggleTodoAction } from './redux/actions/actions';
 
 function App() {
+  const dispatch = useDispatch();
+  const todos = useSelector((state: State) => state.todos)
+  const counter = useSelector((state: State) => state.counter)
+  const [input, setInput] = useState<string>('')
+
+  toast.configure()
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault()
+    setInput(e.target.value)
+  }
+
+  const handleTodoClick = (id: string): any => {
+    dispatch(toggleTodoAction({ id }))
+  }
+
+  const handleAddTodo = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
+    if (input == '') {
+      toast.error('Must enter todo message', {
+        className: "error-toast",
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+      });
+      return
+    }
+    dispatch(createTodoAction({ content: input }))
+    setInput('')
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form className="form" onSubmit={handleAddTodo}>
+        <input placeholder="Enter todo..." type="text" value={input} onChange={handleInputChange} className="input_todo" />
+
+        <h4 className="todo_title">Todo's</h4>
+
+        <ul className="list_todo">
+          {todos.map((todo: Todo) =>
+            <li key={todo.id} onClick={() => { handleTodoClick(todo.id) }} className={!todo.isCompleted ? "list_todo_item" : "list_todo_item list_todo_item_completed"}>{todo.content}</li>)}
+        </ul>
+        <button type="submit" className="form_submit-btn">Add Todo</button>
+      </form>
     </div>
   );
 }

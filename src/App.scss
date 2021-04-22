@@ -1,0 +1,73 @@
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+.App {
+    .form {
+        width: 90%;
+        margin: auto;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+
+        .input_todo {
+            padding: 0.5rem 1rem;
+            border: 0.25rem solid var(--color-primary);
+            width: 50%;
+            border-radius: var(--border-radius);
+            outline: none;
+            transition: all 0.25s ease-in-out;
+            &:hover {
+                background: rgb(245, 243, 243);
+                border-color: var(--color-additional);
+            }
+            &:focus {
+                box-shadow: 0 0 0 5px white, 0 0 0 10px var(--color-primary);
+            }
+        }
+        .todo_title {
+            color: var(--color-primary);
+            font-size: 2rem;
+            font-family: Helvetica, Arial;
+        }
+        .list_todo {
+            list-style: none;
+            text-decoration: none;
+            &_item {
+                color: maroon;
+                margin: 1rem;
+                font-size: 3rem;
+                &_completed {
+                    text-decoration: line-through;
+                    color: darkgrey;
+                }
+            }
+        }
+        &_submit-btn {
+            padding: 0.5rem 1rem;
+            border: var(--color-secondary);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            outline: none;
+            box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.1);
+            transition: all 0.25s ease-in-out;
+            &:hover {
+                background: rgb(245, 243, 243);
+                // border-color: var(--color-additional);
+                // outline: 1rem solid var(--color-primary);
+            }
+            &:focus {
+                box-shadow: 0 0 0 5px white, 0 0 0 10px var(--color-primary);
+            }
+        }
+    }
+}
+
+.error-toast {
+    font-size: 1rem;
+}
